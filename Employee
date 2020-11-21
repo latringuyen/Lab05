@@ -1,0 +1,66 @@
+public class Employee {
+    private String employeeId;
+    private String employeeName;
+    private int salaryPerHour;
+    private int noOfLeavingDay;
+    private int noOfTravelDay;
+    public Employee(String employeeId, String employeeName, int salaryPerHour, int noOfLeavingDay, int noOfTravelDay){
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;
+        this.salaryPerHour = salaryPerHour;
+        this.noOfLeavingDay = noOfLeavingDay;
+        this.noOfTravelDay = noOfTravelDay;
+    }
+    public String getEmployeeId(){
+        return employeeId;
+    }
+    public void setEmployeeId(String employeeId){
+        this.employeeId = employeeId;
+    }
+    public String getEmployeeName(){
+        return employeeName;
+    }
+    public void setEmployeeName(String employeeName){
+        this.employeeName = employeeName;
+    }
+    public int getSalaryPerHour(){
+        return salaryPerHour;
+    }
+    public void setSalaryPerHour(int salaryPerHour){
+        this.salaryPerHour = salaryPerHour;
+    }
+    public int getNoOfLeavingDay(){
+        return noOfLeavingDay;
+    }
+    public void setNoOfLeavingDay(int noOfLeavingDay){
+        this.noOfLeavingDay = noOfLeavingDay;
+    }
+    public int getNoOfTravelDay(){
+        return noOfTravelDay;
+    }
+    public void setNoOfTravelDay(int noOfTravelDay){
+        this.noOfTravelDay = noOfTravelDay;
+    }
+    public int calculateWeeklySalary(){
+        return salaryPerHour * 8 * (5 - noOfLeavingDay + noOfTravelDay/2);
+    }
+    public int compareTo(Employee e){
+        final int Higher = 1;
+        final int Lower = -1;
+        final int Equal = 0;
+        if (this.noOfTravelDay > e.noOfTravelDay) return Higher;
+        if (this.noOfTravelDay < e.noOfTravelDay) return Lower;
+        if (this.noOfTravelDay == e.noOfTravelDay)
+            return Equal;
+        if (this.noOfTravelDay == e.noOfTravelDay && this.noOfLeavingDay < e.noOfLeavingDay)
+            return Higher;
+        if (this.noOfTravelDay == e.noOfTravelDay && this.noOfLeavingDay > e.noOfLeavingDay)
+            return Lower;
+        assert this.equals(e) :" compareTo inconsistent with equals";
+        return Equal;
+        }
+            
+    public String toString(){
+        return "Name: " + employeeName + "- Salary Per Hour: " + salaryPerHour + "- Weekly Salary: " + calculateWeeklySalary();
+    }
+}
