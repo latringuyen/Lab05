@@ -1,0 +1,82 @@
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+public class Project {
+
+    private String projectId;
+    private Date startDate;
+    private Date endDate;
+    private  int totalEmployee;
+    static final String SOURCE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    ArrayList<Employee> listOfEmployee = new ArrayList<Employee>();
+    private static Random generator = new Random(20010709);
+    public Project(String projectId, int totalEmployee, Date startDate, Date endDate){
+        this.projectId = projectId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.totalEmployee = totalEmployee;
+        RandomCreateEmployee();
+    }
+    public static String randomString(int length){
+        StringBuilder so = new StringBuilder(length);
+        for (int i=0; i<length; i++){
+            so.append(SOURCE.charAt(generator.nextInt(SOURCE.length())));
+        }
+        return so.toString();
+    }
+    public String getProjectId(){
+        return projectId;
+    }
+    public void setProjectId(String projectId){
+        this.projectId = projectId;
+    }
+    public Date getStartDate(){
+        return startDate;
+    }
+    public void setStartDate(Date startDate){
+        this.startDate = startDate;
+    }
+    public Date getEndDate(){
+        return endDate;
+    }
+    public void setEndDate(Date endDate){
+        this.endDate = endDate;
+    }
+    public ArrayList<Employee> getListOfEmployee(){
+        return listOfEmployee;
+    }
+    public void setListOfEmployee(ArrayList<Employee> listOfEmployee){
+        this.listOfEmployee = listOfEmployee;
+    }
+    private void RandomCreateEmployee() {
+        for (int i=1; i<=totalEmployee; i++){
+            int salaryPerHour = generator.nextInt(500) + 1;
+            int noOfLeavingDay = generator.nextInt(7) + 1;
+            int noOfTravelDay = generator.nextInt(7) + 1;
+            String employeeId = Integer.toString(i);
+            int[] array = new int[7];
+            for (int j = 0;j <7; j++){
+                array[j] = generator.nextInt(50) + 32;
+            }
+            String employeeName = new String(randomString(7));
+            Employee employeeTemp = new Employee(employeeId, employeeName, salaryPerHour, noOfLeavingDay, noOfTravelDay);
+            listOfEmployee.add(employeeTemp);
+            }
+        }
+    public long estimateBudget(){
+        long budget = 0;
+        for(Employee e : listOfEmployee){
+            budget = budget + e.getSalaryPerHour()*24*7;
+        }
+        long milliSecondsElapsed = endDate.getTime() - startDate.getTime();
+        long diff = TimeUnit.HOURS.convert(milliSecondsElapsed, TimeUnit.MILLISECONDS);
+        return budget * diff;
+    }
+    public String toString(){
+        String str = "";
+        for (Employee e : listOfEmployee){
+            str = str + "\n" + e;
+        }
+        return str;
+    }
+}
